@@ -22,20 +22,24 @@ const schema = a.schema({
       avatar: a.string(),
     })
     .authorization((allow) => [allow.publicApiKey()]),
-  owner: a.model({
-    id: a.string().default(randomUUID()),
-    name: a.string().required(),
-    lastName: a.string().required(),
-    location: a.string(),
-    phone: a.string().required(),
-    createdAt: a.datetime().default(new Date()),
-  }),
-  appointments: a.model({
-    id: a.string().default(randomUUID()),
-    petId: a.string().required(),
-    ownerId: a.string().required(),
-    details: a.string().required(),
-  }),
+  owner: a
+    .model({
+      id: a.string().default(randomUUID()),
+      name: a.string().required(),
+      lastName: a.string().required(),
+      location: a.string(),
+      phone: a.string().required(),
+      createdAt: a.datetime().default(new Date()),
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
+  appointments: a
+    .model({
+      id: a.string().default(randomUUID()),
+      petId: a.string().required(),
+      ownerId: a.string().required(),
+      details: a.string().required(),
+    })
+    .authorization((allow) => [allow.publicApiKey()]),
 });
 
 export type Schema = ClientSchema<typeof schema>;
