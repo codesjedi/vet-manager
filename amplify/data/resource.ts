@@ -18,7 +18,7 @@ const schema = a.schema({
       breed: a.string().required(),
       type: a.string().required(),
       birthDate: a.integer().required(),
-      createdAt: a.datetime().default(new Date()),
+      createdAt: a.datetime().default(new Date().toISOString()),
       avatar: a.string(),
     })
     .authorization((allow) => [allow.publicApiKey()]),
@@ -29,7 +29,7 @@ const schema = a.schema({
       lastName: a.string().required(),
       location: a.string(),
       phone: a.string().required(),
-      createdAt: a.datetime().default(new Date()),
+      createdAt: a.datetime().default(new Date().toISOString()),
     })
     .authorization((allow) => [allow.publicApiKey()]),
   appointments: a
@@ -38,6 +38,7 @@ const schema = a.schema({
       petId: a.string().required(),
       ownerId: a.string().required(),
       details: a.string().required(),
+      createdAt: a.datetime().default(new Date().toISOString()),
     })
     .authorization((allow) => [allow.publicApiKey()]),
 });
