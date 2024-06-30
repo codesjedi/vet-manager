@@ -1,4 +1,5 @@
-import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
+import { type ClientSchema, a, defineData } from '@aws-amplify/backend';
+import { randomUUID } from 'crypto';
 
 /*== STEP 1 ===============================================================
 The section below creates a Todo database table with a "content" field. Try
@@ -7,11 +8,34 @@ specifies that any user authenticated via an API key can "create", "read",
 "update", and "delete" any "Todo" records.
 =========================================================================*/
 const schema = a.schema({
-  Todo: a
+  pet: a
     .model({
-      content: a.string(),
+      id: a.string().default(randomUUID()),
+      name: a.string().required(),
+      ownerId: a.string().required(),
+      diseases: a.string(),
+      medicine: a.string(),
+      breed: a.string().required(),
+      type: a.string().required(),
+      birthDate: a.integer().required(),
+      createdAt: a.datetime().default(new Date()),
+      avatar: a.string(),
     })
     .authorization((allow) => [allow.publicApiKey()]),
+  owner: a.model({
+    id: a.string().default(randomUUID()),
+    name: a.string().required(),
+    lastName: a.string().required(),
+    location: a.string(),
+    phone: a.string().required(),
+    createdAt: a.datetime().default(new Date()),
+  }),
+  appointments: a.model({
+    id: a.string().default(randomUUID()),
+    petId: a.string().required(),
+    ownerId: a.string().required(),
+    details: a.string().required(),
+  }),
 });
 
 export type Schema = ClientSchema<typeof schema>;
@@ -19,9 +43,9 @@ export type Schema = ClientSchema<typeof schema>;
 export const data = defineData({
   schema,
   authorizationModes: {
-    defaultAuthorizationMode: "apiKey",
+    defaultAuthorizationMode: 'apiKey',
     apiKeyAuthorizationMode: {
-      expiresInDays: 30,
+      expiresInDays: 3,
     },
   },
 });
