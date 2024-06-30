@@ -30,6 +30,7 @@ const schema = a.schema({
       location: a.string(),
       phone: a.string().required(),
       createdAt: a.datetime().default(new Date().toISOString()),
+      email: a.string().required(),
     })
     .authorization((allow) => [allow.publicApiKey()]),
   appointments: a
