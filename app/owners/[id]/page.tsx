@@ -1,6 +1,6 @@
 import PageTitle from '@/components/page-title';
 
-export const OwnerPage = ({
+const OwnerPage = ({
   params,
 }: {
   params: {
@@ -13,3 +13,5 @@ export const OwnerPage = ({
     </div>
   );
 };
+
+export default OwnerPage;
