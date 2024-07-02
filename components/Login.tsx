@@ -15,4 +15,4 @@ function Login({ user }: { user?: AuthUser }) {
   return null;
 }
 
-export default withAuthenticator(Login, { hideSignUp: true });
+export default withAuthenticator(Login, { hideSignUp: false });

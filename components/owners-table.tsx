@@ -24,6 +24,7 @@ import {
   TableHead,
   TableBody,
   TableCell,
+  TableFooter,
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { FC } from 'react';
@@ -32,14 +33,16 @@ import { cookiesClient } from '@/lib/amplify-utils';
 
 interface TableRowProps {
   name: string;
+  lastName: string;
   email: string;
   phone: string;
   id: string;
 }
-const Row: FC<TableRowProps> = ({ name, email, phone, id }) => {
+const Row: FC<TableRowProps> = ({ name, lastName, email, phone, id }) => {
   return (
     <TableRow>
       <TableCell className="font-medium">{name}</TableCell>
+      <TableCell className="font-medium">{lastName}</TableCell>
       <TableCell>{email}</TableCell>
       <TableCell>{phone}</TableCell>
       <TableCell className="text-right">
@@ -55,16 +58,15 @@ const Row: FC<TableRowProps> = ({ name, email, phone, id }) => {
 };
 
 export const OwnersTable = async () => {
-  const queryResult = await cookiesClient.models.owner?.list();
-  const owners = queryResult?.data;
-  console.log(queryResult);
+  const { data: owners } = await cookiesClient.models.owner?.list();
   return (
     <div className="border rounded-lg w-[80%] mx-auto">
       <div className="relative w-full overflow-auto">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Nombre</TableHead>
+              <TableHead>Nombres</TableHead>
+              <TableHead>Apellidos</TableHead>
               <TableHead>Email</TableHead>
               <TableHead>Telefono</TableHead>
               <TableHead className="text-right">Acciones</TableHead>
@@ -76,6 +78,7 @@ export const OwnersTable = async () => {
                 <Row
                   key={owner.id}
                   name={owner.name}
+                  lastName={owner.lastName}
                   email={owner.email}
                   phone={owner.phone}
                   id={owner.id}

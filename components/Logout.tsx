@@ -16,7 +16,7 @@ export default function Logout() {
       }}
       className="px-2 bg-white text-black"
     >
-      Sign out
+      Cerrar sesion
     </button>
   );
 }

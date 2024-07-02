@@ -6,6 +6,7 @@ import ConfigureAmplifyClientSide from '@/components/ConfigureAmplify';
 
 import '@aws-amplify/ui-react/styles.css';
 import '@/app/globals.css';
+import { Toaster } from '@/components/ui/toaster';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -25,6 +26,7 @@ export default function RootLayout({
         <Navbar />
         <ConfigureAmplifyClientSide />
         {children}
+        <Toaster />
       </body>
     </html>
   );

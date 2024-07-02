@@ -17,9 +17,9 @@ const schema = a.schema({
       medicine: a.string(),
       breed: a.string().required(),
       type: a.string().required(),
-      birthDate: a.integer().required(),
+      birthDate: a.string(),
       createdAt: a.datetime().default(new Date().toISOString()),
-      avatar: a.string(),
+      avatarUrl: a.string(),
     })
     .authorization((allow) => [allow.publicApiKey()]),
   owner: a

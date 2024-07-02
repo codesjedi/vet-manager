@@ -11,12 +11,12 @@ const Navbar = () => {
         href="/"
       >
         <PawPrintIcon className="w-6 h-6" />
-        <span>QR Finder</span>
+        <span>Vet manager</span>
       </Link>
       <div>
-        <Link href="/owners" className="text-gray-900 m-4">
+        {/* <Link href="/owners" className="text-gray-900 m-4">
           Clientes
-        </Link>
+        </Link> */}
         <Logout />
       </div>
     </header>
