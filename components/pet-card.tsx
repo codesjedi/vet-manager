@@ -1,9 +1,11 @@
+'use client';
 import React, { FC } from 'react';
 import { MoveHorizontalIcon } from 'lucide-react';
 import Link from 'next/link';
 
+import '@aws-amplify/ui-react/styles.css';
+
 import { Card, CardDescription, CardHeader, CardTitle } from './ui/card';
-import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,23 +13,26 @@ import {
   DropdownMenuTrigger,
 } from './ui/dropdown-menu';
 import { Button } from './ui/button';
+import { StorageImage } from '@aws-amplify/ui-react-storage';
+import { PetValue } from '@/app/owners/[id]/pets/page';
 
-const PetCard: FC<{ id?: string | null; name: string; breed: string }> = ({
-  id,
-  name,
-  breed,
-}) => {
-  const avatar = '/placeholder-pet.jpg';
-  const emoji = '🐶';
+const PetCard: FC<PetValue> = ({ id, name, breed, avatarUrl }) => {
   return (
-    <Card key={id}>
+    <Card>
       <CardHeader className="flex flex-row items-center gap-4">
-        <Avatar id={id as string}>
-          <AvatarImage alt={`${name}'s avatar`} src={avatar} />
-          <AvatarFallback>{emoji}</AvatarFallback>
-        </Avatar>
+        {avatarUrl ? (
+          <div className="relative w-20 h-20 rounded-md overflow-hidden">
+            <StorageImage
+              path={`${avatarUrl}`}
+              alt={`${name}'s profile picture`}
+              className="object-cover w-full h-full rounded-full"
+              fallbackSrc="https://placehold.co/150?text=..."
+            />
+          </div>
+        ) : null}
+
         <div className="grid gap-1">
-          <Link href={`/pet/${id}`}>
+          <Link href={`/pets/${id}`}>
             <CardTitle>{name}</CardTitle>
           </Link>
           <CardDescription>{breed}</CardDescription>

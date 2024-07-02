@@ -8,6 +8,11 @@ import { runWithAmplifyServerContext } from '@/lib/amplify-utils';
 export async function middleware(request: NextRequest) {
   const response = NextResponse.next();
 
+  if (request.nextUrl.pathname.startsWith('/pets')) {
+    // public route
+    return response;
+  }
+
   const authenticated = await runWithAmplifyServerContext({
     nextServerContext: { request, response },
     operation: async (contextSpec) => {

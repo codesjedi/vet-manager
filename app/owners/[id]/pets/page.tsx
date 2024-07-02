@@ -1,5 +1,22 @@
 import PageTitle from '@/components/page-title';
+import PetCard from '@/components/pet-card';
 import { cookiesClient } from '@/lib/amplify-utils';
+
+export interface PetValue {
+  name: string;
+  ownerId: string;
+  breed: string;
+  type: string;
+  readonly updatedAt: string;
+  id?: Nullable<string>;
+  diseases?: Nullable<string>;
+  medicine?: Nullable<string>;
+  birthDate?: Nullable<string>;
+  createdAt?: Nullable<string>;
+  avatarUrl?: Nullable<string>;
+}
+
+export type Nullable<T> = T | null | undefined;
 
 const OwnerPetsPage = async ({
   params,
@@ -28,21 +45,15 @@ const OwnerPetsPage = async ({
         }}
         back="/"
       />
-      {pets.length > 0 ? (
-        <ul>
-          {pets.map((pet: any) => (
-            <li key={pet.id}>
-              <p>{pet.name}</p>
-              <p>{pet.type}</p>
-              <p>{pet.breed}</p>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <div className="w-full h-[80vh] flex justify-center items-center">
-          <p>No hay mascotas registradas 🐾</p>
-        </div>
-      )}
+      <div className="grid grid-cols-3 gap-4 mx-8">
+        {pets.length > 0 ? (
+          pets.map((pet: PetValue) => <PetCard key={pet.id} {...pet} />)
+        ) : (
+          <div className="w-full h-[80vh] flex justify-center items-center">
+            <p>No hay mascotas registradas 🐾</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

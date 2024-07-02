@@ -1,6 +1,7 @@
 import { NewPetOwnerForm } from '@/components/create-owner-form';
 import { cookiesClient } from '@/lib/amplify-utils';
 import { logger } from '@/lib/logger';
+import { redirect } from 'next/navigation';
 
 const CreateOwnerPage = async () => {
   const createOwner = async (formData: FormData) => {

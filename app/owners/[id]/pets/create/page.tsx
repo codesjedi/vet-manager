@@ -3,6 +3,7 @@ import PageTitle from '@/components/page-title';
 import { cookiesClient } from '@/lib/amplify-utils';
 import { logger } from '@/lib/logger';
 import { PageParams } from '@/types/PageParams';
+import { redirect } from 'next/navigation';
 import { FC } from 'react';
 
 const CreatePetPage: FC<PageParams> = async ({ params }) => {
@@ -45,13 +46,18 @@ const CreatePetPage: FC<PageParams> = async ({ params }) => {
         throw new Error(queryResult.errors[0].message);
       }
     } catch (error) {
+      console.error(error);
       throw new Error('Error al crear mascota');
     }
   };
   return (
     <div>
       <PageTitle title="Cargar mascota" back={`/owners/${params.id}/pets`} />
-      <CreatePetForm onSubmit={createPet} ownerId={humano?.name as string} />
+      <CreatePetForm
+        onSubmit={createPet}
+        ownerId={humano?.id as string}
+        ownerName={humano?.name as string}
+      />
     </div>
   );
 };
