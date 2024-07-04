@@ -38,7 +38,7 @@ const schema = a.schema({
       id: a.string().default(randomUUID()),
       petId: a.string().required(),
       ownerId: a.string().required(),
-      details: a.string().required(),
+      content: a.string().required(),
       createdAt: a.datetime().default(new Date().toISOString()),
     })
     .authorization((allow) => [allow.publicApiKey()]),
