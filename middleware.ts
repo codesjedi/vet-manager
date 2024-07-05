@@ -8,7 +8,7 @@ import { runWithAmplifyServerContext } from '@/lib/amplify-utils';
 export async function middleware(request: NextRequest) {
   const response = NextResponse.next();
 
-  if (request.nextUrl.pathname.startsWith('/pets')) {
+  if (request.nextUrl.pathname.startsWith('/public')) {
     // public route
     return response;
   }

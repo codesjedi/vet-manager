@@ -32,6 +32,7 @@ import {
   TableCell,
 } from '@/components/ui/table';
 import { Nullable } from '@/app/owners/[id]/pets/page';
+import { cookiesClient } from '@/lib/amplify-utils';
 
 interface AppointmentProps {
   pet: {
@@ -40,6 +41,8 @@ interface AppointmentProps {
   };
   owner: {
     id?: Nullable<string>;
+    name?: string;
+    lastName?: string;
   };
   appointments: {
     id: Nullable<string>;
@@ -48,53 +51,32 @@ interface AppointmentProps {
     appointmentDateTime: Nullable<string>;
     reason: string;
   }[];
+  createAppointment: (formData: FormData) => void;
 }
 
 export const Appointments: FC<AppointmentProps> = ({
   appointments,
   pet,
   owner,
+  createAppointment,
 }) => {
-  const [newAppointment, setNewAppointment] = useState({
-    petName: 'Buddy',
-    ownerName: 'John Doe',
-    appointmentDateTime: '2023-06-15 10:00 AM',
-    reason: 'Routine checkup',
-  });
-  const handleInputChange = (e: any) => {
-    setNewAppointment({
-      ...newAppointment,
-      [e.target.name]: e.target.value,
-    });
-  };
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-
-    setNewAppointment({
-      petName: 'Buddy',
-      ownerName: 'John Doe',
-      appointmentDateTime: '2023-06-15 10:00 AM',
-      reason: 'Routine checkup',
-    });
-  };
-
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Vet Appointments</h1>
+      <h1 className="text-3xl font-bold mb-6">Consultas</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div>
-          <h2 className="text-2xl font-bold mb-4">New Appointment</h2>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <h2 className="text-2xl font-bold mb-4">Nueva visita</h2>
+          <form action={createAppointment} className="space-y-4">
             <div>
               <label htmlFor="petName" className="block font-medium mb-1">
-                Pet Name
+                {`Nombre de la mascota`}
               </label>
               <Input
                 id="petName"
                 name="petName"
-                value={newAppointment.petName}
-                onChange={handleInputChange}
-                required
+                disabled
+                defaultValue={pet.name}
+                placeholder="Luca"
               />
             </div>
             <div>
@@ -104,37 +86,30 @@ export const Appointments: FC<AppointmentProps> = ({
               <Input
                 id="ownerName"
                 name="ownerName"
-                value={newAppointment.ownerName}
-                onChange={handleInputChange}
-                required
+                disabled
+                defaultValue={`${owner.name} ${owner.lastName}`}
               />
             </div>
             <div>
               <label htmlFor="reason" className="block font-medium mb-1">
-                Reason for Visit
+                {`Motivo de la visita`}
               </label>
-              <Textarea
-                id="reason"
-                name="reason"
-                value={newAppointment.reason}
-                onChange={handleInputChange}
-                required
-              />
+              <Textarea id="reason" name="reason" required />
             </div>
             <Button type="submit" className="w-full">
-              Create Appointment
+              {`Cargar visita`}
             </Button>
           </form>
         </div>
         <div>
-          <h2 className="text-2xl font-bold mb-4">Past Appointments</h2>
+          <h2 className="text-2xl font-bold mb-4">{`Visitas anteriores`}</h2>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Pet Name</TableHead>
-                <TableHead>Owner Name</TableHead>
-                <TableHead>Appointment</TableHead>
-                <TableHead>Content</TableHead>
+                <TableHead>Mascota</TableHead>
+                <TableHead>Humano</TableHead>
+                <TableHead>Fecha</TableHead>
+                <TableHead>Motivo</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

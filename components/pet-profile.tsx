@@ -9,6 +9,7 @@ import { Separator } from '@/components/ui/separator';
 // import GeolocationFetcher from '@/app/components/GeolocationFetcher';
 import { ActionButton } from '@/components/action-button';
 import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 
 export interface PetProfileProps {
   name: string;
@@ -34,6 +35,8 @@ const PetProfile: FC<PetProfileProps> = ({
   const latitude = 37.7749; // Default to San Francisco
   const longitude = -122.4194; // Default to San Francisco
   const mapSrc = `https://www.google.com/maps?q=${latitude},${longitude}&hl=es&z=14&output=embed`;
+  const pathname = usePathname();
+  const isPublicPage = pathname.includes('public');
   return (
     <div className="flex flex-col items-center justify-center h-screen ">
       <Card className="w-full max-w-md">
@@ -62,10 +65,12 @@ const PetProfile: FC<PetProfileProps> = ({
               <PhoneIcon className="mr-2 h-4 w-4" />
               Whatsapp
             </ActionButton>
-            <ActionButton to={`/history/${id}`}>
-              <HistoryIcon className="mr-2 h-4 w-4" />
-              Historial
-            </ActionButton>
+            {isPublicPage ? null : (
+              <ActionButton to={`/appointments/create/${id}`}>
+                <HistoryIcon className="mr-2 h-4 w-4" />
+                Historial
+              </ActionButton>
+            )}
           </div>
           <Link href={`mailto:${email}`} className="my-4">
             <div className="flex items-center gap-4">
